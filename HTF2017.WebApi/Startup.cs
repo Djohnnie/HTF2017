@@ -24,6 +24,10 @@ namespace HTF2017.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            }));
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -49,10 +53,11 @@ namespace HTF2017.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowAll");
             app.UseMvc();
             app.UseSwagger(c =>
             {
-                
+
             });
             app.UseSwaggerUI(c =>
             {

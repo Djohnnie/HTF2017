@@ -10,7 +10,9 @@ namespace HTF2017.DataAccess
         public Int32 SysId { get; set; }
 
         public String Name { get; set; }
+
         public double Lattitude { get; set; }
+        
         public double Longitude { get; set; }
 
         public virtual ICollection<Team> Teams { get; set; }

@@ -75,7 +75,7 @@ namespace HTF2017.Business
                 NumberOfAndroidsAvailable = x.TotalNumberOfAndroids - x.Androids.Count,
                 NumberOfAndroidsActive = x.Androids.Count(a => !a.Compomised),
                 NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compomised),
-            }).SingleOrDefaultAsync();
+            }).SingleOrDefaultAsync(e=>e.Id == teamId);
         }
     }
 }

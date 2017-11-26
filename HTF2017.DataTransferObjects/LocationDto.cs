@@ -7,5 +7,8 @@ namespace HTF2017.DataTransferObjects
         public Guid Id { get; set; }
 
         public String Name { get; set; }
+        public double Lattitude { get; set; }
+        public double Longitude { get; set; }
+
     }
 }

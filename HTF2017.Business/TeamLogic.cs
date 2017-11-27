@@ -6,6 +6,7 @@ using HTF2017.Mappers;
 using HTF2017.DataTransferObjects;
 using System.Linq;
 using System;
+using System.Net;
 using HTF2017.Business.Exceptions;
 using Crypt = BCrypt.Net.BCrypt;
 
@@ -85,6 +86,37 @@ namespace HTF2017.Business
             }).SingleOrDefaultAsync(e => e.Id == teamId);
         }
 
+        /// <summary>
+        /// Checks the status on a team feedback URL.
+        /// </summary>
+        /// <param name="teamId">The unique identifier of the registered team to check the feedback URL status for.</param>
+        /// <returns>The feedback URL status.</returns>
+        public async Task<TeamFeedbackUrlStatusDto> GetTeamFeedbackUrlStatus(Guid teamId)
+        {
+            Team teamToCheck = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Id == teamId);
+            if (teamToCheck == null)
+            {
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "The specified team is unknown!" };
+            }
+            if (string.IsNullOrWhiteSpace(teamToCheck.FeedbackEndpoint))
+            {
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "There is no feedback URL configured for the specified team!" };
+            }
+            try
+            {
+                HttpStatusCode statusCode = await GetStatusCode(teamToCheck.FeedbackEndpoint);
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = statusCode.ToString() };
+            }
+            catch (UriFormatException)
+            {
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "The feedback URL for the specified team is not formatted correctly!" };
+            }
+            catch (WebException ex)
+            {
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = ex.Message };
+            }
+        }
+
         private void ValidateTeam(TeamRegistrationDto team)
         {
             if (team == null)
@@ -99,6 +131,24 @@ namespace HTF2017.Business
             {
                 throw new HtfValidationException("The password for the team cannot be empty!");
             }
+        }
+
+        public async Task<HttpStatusCode> GetStatusCode(string url)
+        {
+            HttpStatusCode result = default(HttpStatusCode);
+
+            var request = WebRequest.Create(url);
+            request.Method = "GET";
+            using (HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse)
+            {
+                if (response != null)
+                {
+                    result = response.StatusCode;
+                    response.Close();
+                }
+            }
+
+            return result;
         }
     }
 }

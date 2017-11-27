@@ -58,5 +58,18 @@ namespace HTF2017.WebApi.Controllers
             TeamDto updatedTeam = await _teamLogic.UpdateTeam(teamId, team);
             return Ok(updatedTeam);
         }
+
+        /// <summary>
+        /// Checks the status on a team feedback URL.
+        /// </summary>
+        /// <param name="teamId">The unique identifier of the registered team to check the feedback URL status for.</param>
+        /// <returns>The feedback URL status.</returns>
+        /// <remarks>Checks the status on a team feedback URL and returns the result to you.</remarks>
+        [HttpGet, Route("teams/{teamId}/feedback")]
+        public async Task<IActionResult> GetTeamFeedbackUrlStatus(Guid teamId)
+        {
+            TeamFeedbackUrlStatusDto status = await _teamLogic.GetTeamFeedbackUrlStatus(teamId);
+            return Ok(status);
+        }
     }
 }

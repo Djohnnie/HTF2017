@@ -54,6 +54,8 @@ namespace HTF2017.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseExceptionMiddleware();
             app.UseCors("AllowAll");
             app.UseMvc();

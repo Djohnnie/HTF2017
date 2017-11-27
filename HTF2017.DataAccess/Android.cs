@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HTF2017.DataAccess
 {
@@ -8,10 +9,22 @@ namespace HTF2017.DataAccess
 
         public Int32 SysId { get; set; }
 
-        public Level Level { get; set; }
+        public AutoPilot AutoPilot { get; set; }
+
+        public SensorAccuracy LocationSensorAccuracy { get; set; }
+
+        public SensorAccuracy CroudSensorAccuracy { get; set; }
+
+        public SensorAccuracy MoodSensorAccuracy { get; set; }
+
+        public SensorAccuracy RelationshipSensorAccuracy { get; set; }
 
         public Boolean Compomised { get; set; }
 
         public virtual Team Team { get; set; }
+
+        public virtual ICollection<SensoryData> SensoryData { get; set; }
+
+        public virtual ICollection<SensoryDataRequest> SensoryDataRequests { get; set; }
     }
 }

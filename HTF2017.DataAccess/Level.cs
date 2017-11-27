@@ -1,6 +1,6 @@
 ﻿namespace HTF2017.DataAccess
 {
-    public enum Level
+    public enum AutoPilot
     {
         Level1,
 

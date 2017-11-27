@@ -6,6 +6,8 @@ using HTF2017.Mappers;
 using HTF2017.DataTransferObjects;
 using System.Linq;
 using System;
+using HTF2017.Business.Exceptions;
+using Crypt = BCrypt.Net.BCrypt;
 
 namespace HTF2017.Business
 {
@@ -42,6 +44,7 @@ namespace HTF2017.Business
 
         public async Task<TeamDto> RegisterTeam(TeamRegistrationDto team)
         {
+            ValidateTeam(team);
             Team teamToRegister = _teamRegistrationMapper.Map(team);
             List<Location> availableLocations = await _dbContext.Locations.Where(x => x.Teams.Count == 0).ToListAsync();
             teamToRegister.Location = availableLocations.RandomSingle();
@@ -50,6 +53,7 @@ namespace HTF2017.Business
                 throw new Exception("No locations available");
             }
             teamToRegister.TotalNumberOfAndroids = 1000;
+            teamToRegister.Password = Crypt.HashPassword(teamToRegister.Password, 10, enhancedEntropy: true);
             _dbContext.Teams.Add(teamToRegister);
             await _dbContext.SaveChangesAsync();
             TeamDto registeredTeam = _teamMapper.Map(teamToRegister);
@@ -59,7 +63,10 @@ namespace HTF2017.Business
 
         public async Task<TeamDto> UpdateTeam(Guid teamId, TeamRegistrationDto team)
         {
+            ValidateTeam(team);
             Team teamToUpdate = await _dbContext.Teams.SingleOrDefaultAsync(x => x.Id == teamId);
+            if (teamToUpdate == null) { throw new HtfValidationException("The specified team is unknown!"); }
+            if (!Crypt.EnhancedVerify(team.Password, teamToUpdate.Password)) { throw new HtfValidationException("The specified password is not correct!"); }
             teamToUpdate.Name = team.Name;
             teamToUpdate.FeedbackEndpoint = team.FeedbackEndpoint;
             await _dbContext.SaveChangesAsync();
@@ -75,7 +82,23 @@ namespace HTF2017.Business
                 NumberOfAndroidsAvailable = x.TotalNumberOfAndroids - x.Androids.Count,
                 NumberOfAndroidsActive = x.Androids.Count(a => !a.Compomised),
                 NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compomised),
-            }).SingleOrDefaultAsync(e=>e.Id == teamId);
+            }).SingleOrDefaultAsync(e => e.Id == teamId);
+        }
+
+        private void ValidateTeam(TeamRegistrationDto team)
+        {
+            if (team == null)
+            {
+                throw new HtfValidationException("The team to register is invalid due to an unknown reason!");
+            }
+            if (string.IsNullOrEmpty(team.Name))
+            {
+                throw new HtfValidationException("The name of the team cannot be empty!");
+            }
+            if (string.IsNullOrEmpty(team.Password))
+            {
+                throw new HtfValidationException("The password for the team cannot be empty!");
+            }
         }
     }
 }

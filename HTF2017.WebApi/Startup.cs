@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using HTF2017.DataAccess;
 using HTF2017.Mappers;
+using HTF2017.WebApi.Middleware;
 
 namespace HTF2017.WebApi
 {
@@ -53,6 +54,7 @@ namespace HTF2017.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseExceptionMiddleware();
             app.UseCors("AllowAll");
             app.UseMvc();
             app.UseSwagger(c =>

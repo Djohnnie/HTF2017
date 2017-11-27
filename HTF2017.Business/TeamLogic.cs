@@ -53,6 +53,7 @@ namespace HTF2017.Business
             {
                 throw new Exception("No locations available");
             }
+            teamToRegister.Score = 100;
             teamToRegister.TotalNumberOfAndroids = 1000;
             teamToRegister.Password = Crypt.HashPassword(teamToRegister.Password, 10, enhancedEntropy: true);
             _dbContext.Teams.Add(teamToRegister);
@@ -70,6 +71,7 @@ namespace HTF2017.Business
             if (!Crypt.EnhancedVerify(team.Password, teamToUpdate.Password)) { throw new HtfValidationException("The specified password is not correct!"); }
             teamToUpdate.Name = team.Name;
             teamToUpdate.FeedbackEndpoint = team.FeedbackEndpoint;
+            teamToUpdate.Score--;
             await _dbContext.SaveChangesAsync();
             return await _dbContext.Teams.Include(x => x.Location).Select(x => new TeamDto
             {
@@ -101,6 +103,11 @@ namespace HTF2017.Business
             if (string.IsNullOrWhiteSpace(teamToCheck.FeedbackEndpoint))
             {
                 return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "There is no feedback URL configured for the specified team!" };
+            }
+            if (teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("htf2017.djohnnie.be") ||
+                teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("htf2017.azurewebsites.net"))
+            {
+                return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "Don't try that!!!" };
             }
             try
             {

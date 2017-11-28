@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.WebApi", "HTF2017.WebApi\HTF2017.WebApi.csproj", "{6ABF0D1E-D918-4A27-BA79-CF26C734000C}"
 EndProject
@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.DataAccess", "HTF20
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.Business", "HTF2017.Business\HTF2017.Business.csproj", "{C8EBD262-37AA-40A0-8CE7-FF90C1261526}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.DataTransferObjects", "HTF2017.DataTransferObjects\HTF2017.DataTransferObjects.csproj", "{E91047DF-11F7-4048-98F6-E1F1C17ABDE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.DataTransferObjects", "HTF2017.DataTransferObjects\HTF2017.DataTransferObjects.csproj", "{E91047DF-11F7-4048-98F6-E1F1C17ABDE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.Mappers", "HTF2017.Mappers\HTF2017.Mappers.csproj", "{BB639605-8062-4BD5-BC9A-3386D5677BB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.Mappers", "HTF2017.Mappers\HTF2017.Mappers.csproj", "{BB639605-8062-4BD5-BC9A-3386D5677BB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.WebJob", "HTF2017.WebJob\HTF2017.WebJob.csproj", "{74A1521B-19EA-4726-A4FD-03C5AE3043B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BB639605-8062-4BD5-BC9A-3386D5677BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB639605-8062-4BD5-BC9A-3386D5677BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB639605-8062-4BD5-BC9A-3386D5677BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

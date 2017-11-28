@@ -13,7 +13,7 @@
         </hgroup>
         <p>
             We are 2030 and the world has reverted into chaos.
-            766 million of the poorest people are roaming the planet with no home and in search for a better life.
+            766 million of the poorest people are roaming the planet with no home and in search of a better life.
             Because it is hard to infiltrate or hack their complicated communication
             and voting network without them knowing, another way of infiltration was devised.
             A large number of highly advanced androids, indistinguishable from actual humans,
@@ -22,10 +22,33 @@
             unexpected events or attacks against the established order.
         </p>
 
-        <h2>Get started</h2>
-        <p>Browse to <a href="https://seppevanwinkel.be/hackthefuture">the HTF2017 .NET challenge dashboard</a> to create your team and get started!</p>
+        <a href="#start">Get started</a>
+        <br />
+        <a href="#androids">Androids</a>
+        <br />
+        <a href="#sensors">Sensors</a>
+        <br />
+        <a href="#scoring">Scoring</a>
+        <br />
+        <a href="#swagger">Swagger</a>
+        <br />
+        <a href="#ngrok">ngrok</a>
+        <br />
 
-        <h2>Androids</h2>
+        <h2 id="start">Get started</h2>
+        <p>
+            Browse to <a href="https://seppevanwinkel.be/hackthefuture">the HTF2017 .NET challenge
+                dashboard</a> to create your team and get started!
+        </p>
+        <p>
+            Technically, this challenge is about communicating with an HTTP webservice using .NET code and
+            writing your own HTTP webservice using ASP.NET WebAPI. You need to write .NET client code to
+            call an existing HTTP webservice (written using ASP.NET WebAPI) to issue commands. You need to
+            write .NET server code using ASP.NET WebAPI to receive feedback from the server.
+            Additionaly you need to work on a dashboard in a UI technology of your choice.
+        </p>
+
+        <h2 id="androids">Androids</h2>
         <p>
             Your job is to deploy androids and create a dashboard to follow-up on their actions and findings.
             Each team has access to 1.000 of our newest and most advanced androids. Their workings are simple,
@@ -41,7 +64,7 @@
                     are therefore very reliable. Their sensor updates are automated but not very frequent based on
                     the increased security risk.
                     The sensory data is low in frequency and usefullness, but the android is likely to last a long
-                    time in the field gathering some usefull data.
+                    time in the field gathering some useful data.
                 </li>
                 <li>
                     <b>Level 2</b><br />
@@ -61,15 +84,63 @@
             </ul>
         </p>
 
-        <h2>Sensors</h2>
+        <h2 id="sensors">Sensors</h2>
         <p>
-            Each
+            Each android has a limited number of sensors that can provide you with useful data.
         </p>
+        <ul>
+            <li>
+                <b>Location</b><br />
+                Returns the location based on longitude and lattitude. If the sensor is off, no location is
+                measured. Depending on the sensor accuracy the location accuracy has a 1km fault radius for high accuracy,
+                a 100km fault radius for medium accuracy and a 1000km fault radius for low accuracy.
+            </li>
+            <li>
+                <b>Crowd</b><br />
+                Returns the size of a crowd based on number of people. If the sensor is off, no crowding is
+                measured. Depending on the sensor accuracy the crowding accuracy has a deviation of 100 people for
+                high accuracy, 1K people for medium accuracy and 10K people for low accuracy.
+            </li>
+            <li>
+                <b>Mood</b><br />
+                Returns the mood of a crowd based on an 8-bit number where a low number describes a relaxed mood
+                and a high number describes a tense mood. If the sensor is off, no mood is measured.
+                Depending on the sensor accuracy the mood accuracy has a deviation of 16 for high accuracy,
+                64 for medium accuracy and 128 for low accuracy.
+            </li>
+            <li>
+                <b>Relationship</b><br />
+                Returns the relations between people of a crowd as an 8-bit number where a low number indicates
+                no relations between people and a high number indicates strong relations between people. If the
+                sensor is off, no relationship is measured. Depending on the sensor accuracy the relationship
+                accuracy has a deviation of 16 for high accuracy, 64 for medium accuracy and 128 for low accuracy.
+            </li>
+        </ul>
 
-        <h2>Swagger</h2>
+        <h2 id="scoring">Scoring</h2>
+        <p>
+            If you are a competitive team, you can focus on the team scoring to have some fun while programming.
+            Each action you take, but also its consequences can gain or lose you an amount of points.
+            Below you can find a list of points to gain or lose. Have fun!
+        </p>
+        <ul>
+            <li><b>+100 points</b> for registering a new team.</li>
+            <li><b>-1 points</b> for updating an existing team.</li>
+            <li><b>+10 points</b> for deploying a level-1 android.</li>
+            <li><b>+100 points</b> for deploying a level-2 android.</li>
+            <li><b>+1000 points</b> for deploying a level-3 android.</li>
+            <li><b>+10 points</b> for each successfully received feedback data.</li>
+            <li><b>-1 points</b> for each unsuccessful received feedback data.</li>
+            <li><b>-1000 points</b> for a each compromised level-1 android.</li>
+            <li><b>-100 points</b> for a each compromised level-2 android.</li>
+            <li><b>-10 points</b> for a each compromised level-3 android.</li>
+        </ul>
+
+        <h2 id="swagger">Swagger</h2>
+        <p>For this challenge</p>
         <p>Check out the <a href="/swagger">Swagger page</a> for the HTF2017 HTTP WebService</p>
 
-        <h2>ngrok</h2>
+        <h2 id="ngrok">ngrok</h2>
         <p>
             <a href="https://ngrok.com/">ngrok</a> is an application for Windows, Mac OS X, and Linux
             that creates a tunnel but also allows you to inspect all traffic that goes through the tunnel
@@ -88,22 +159,7 @@
             for the &lt;bindings&gt; element and add the ngrok hostname to the bindings list to make ngrok work.
         </p>
 
-        <h2>Scoring</h2>
-        <p>
-            There is a lot of scoring Blablabla.
-        </p>
-        <ul>
-            <li><b>+100 points</b> for registering a new team.</li>
-            <li><b>-1 points</b> for updating an existing team.</li>
-            <li><b>+10 points</b> for deploying a level-1 android.</li>
-            <li><b>+100 points</b> for deploying a level-2 android.</li>
-            <li><b>+1000 points</b> for deploying a level-3 android.</li>
-            <li><b>+10 points</b> for each successfully received feedback data.</li>
-            <li><b>-1 points</b> for each unsuccessful received feedback data.</li>
-            <li><b>-1000 points</b> for a each compromised level-1 android.</li>
-            <li><b>-100 points</b> for a each compromised level-2 android.</li>
-            <li><b>-10 points</b> for a each compromised level-3 android.</li>
-        </ul>
+
     </div>
 </body>
 </html>

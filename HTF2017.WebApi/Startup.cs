@@ -41,9 +41,13 @@ namespace HTF2017.WebApi
             services.AddTransient<HtfDbContext>();
             services.AddTransient<LocationLogic>();
             services.AddTransient<TeamLogic>();
+            services.AddTransient<AndroidLogic>();
             services.AddTransient<LocationMapper>();
             services.AddTransient<TeamMapper>();
             services.AddTransient<TeamRegistrationMapper>();
+            services.AddTransient<AndroidMapper>();
+            services.AddTransient<DeploymentMapper>();
+            services.AddTransient<RequestMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,9 +2,9 @@
 
 namespace HTF2017.DataTransferObjects
 {
-    public class DeployAndroidDto
+    public class AndroidDto
     {
-        public String Password { get; set; }
+        public Guid Id { get; set; }
 
         public AutoPilotDto AutoPilot { get; set; }
 
@@ -15,5 +15,7 @@ namespace HTF2017.DataTransferObjects
         public SensorAccuracyDto MoodSensorAccuracy { get; set; }
 
         public SensorAccuracyDto RelationshipSensorAccuracy { get; set; }
+
+        public Boolean Compomised { get; set; }
     }
 }

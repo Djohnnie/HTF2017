@@ -12,7 +12,7 @@ namespace HTF2017.DataAccess
 
         public Double? Longitude { get; set; }
 
-        public Byte? Croud { get; set; }
+        public Byte? Crowd { get; set; }
 
         public Byte? Mood { get; set; }
 

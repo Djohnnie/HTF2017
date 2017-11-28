@@ -10,7 +10,7 @@ namespace HTF2017.DataAccess
 
         public Boolean Location { get; set; }
 
-        public Boolean Croud { get; set; }
+        public Boolean Crowd { get; set; }
 
         public Boolean Mood { get; set; }
 

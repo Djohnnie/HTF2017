@@ -60,7 +60,7 @@
                 </li>
             </ul>
         </p>
-        
+
         <h2>Sensors</h2>
         <p>
             Each
@@ -71,8 +71,39 @@
 
         <h2>ngrok</h2>
         <p>
-            <a href="https://ngrok.com/">ngrok</a> is an application for Windows, Mac OS X, and Linux that creates a tunnel but also allows you to inspect all traffic that goes through the tunnel and replay that traffic for testing.
+            <a href="https://ngrok.com/">ngrok</a> is an application for Windows, Mac OS X, and Linux
+            that creates a tunnel but also allows you to inspect all traffic that goes through the tunnel
+            and replay that traffic for testing.
         </p>
+        <p>
+            You can <a href="https://ngrok.com/download">download</a> ngrok, unzip the package and run it
+            from command-line or PowerShell.
+        </p>
+        <p>
+            To make ngrok compatible with IISExpress (Visual Studio Debugging of ASP.NET web applications)
+            you should add your ngrok hostname to the website bindings of the IISExpress configuration.
+            For this you need to find the IISExpress icon in your Windows notification area, right click it
+            and choose "Show all Applications". In this new window, you click your application and choose
+            to edit the configuration in the bottom area of the window. In the configuration file you search
+            for the &lt;bindings&gt; element and add the ngrok hostname to the bindings list to make ngrok work.
+        </p>
+
+        <h2>Scoring</h2>
+        <p>
+            There is a lot of scoring Blablabla.
+        </p>
+        <ul>
+            <li><b>+100 points</b> for registering a new team.</li>
+            <li><b>-1 points</b> for updating an existing team.</li>
+            <li><b>+10 points</b> for deploying a level-1 android.</li>
+            <li><b>+100 points</b> for deploying a level-2 android.</li>
+            <li><b>+1000 points</b> for deploying a level-3 android.</li>
+            <li><b>+10 points</b> for each successfully received feedback data.</li>
+            <li><b>-1 points</b> for each unsuccessful received feedback data.</li>
+            <li><b>-1000 points</b> for a each compromised level-1 android.</li>
+            <li><b>-100 points</b> for a each compromised level-2 android.</li>
+            <li><b>-10 points</b> for a each compromised level-3 android.</li>
+        </ul>
     </div>
 </body>
 </html>

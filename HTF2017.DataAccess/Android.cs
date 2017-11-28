@@ -13,13 +13,15 @@ namespace HTF2017.DataAccess
 
         public SensorAccuracy LocationSensorAccuracy { get; set; }
 
-        public SensorAccuracy CroudSensorAccuracy { get; set; }
+        public SensorAccuracy CrowdSensorAccuracy { get; set; }
 
         public SensorAccuracy MoodSensorAccuracy { get; set; }
 
         public SensorAccuracy RelationshipSensorAccuracy { get; set; }
 
         public Boolean Compomised { get; set; }
+
+        public Guid TeamId { get; set; }
 
         public virtual Team Team { get; set; }
 

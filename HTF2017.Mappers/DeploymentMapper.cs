@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using HTF2017.DataAccess;
@@ -17,12 +18,12 @@ namespace HTF2017.Mappers
                 cfg.CreateMap<Android, DeployAndroidDto>();
                 cfg.CreateMap<DeployAndroidDto, Android>();
                 cfg.CreateMap<AutoPilot, AutoPilotDto>()
-                    .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src))
+                    .ForMember(dest => dest.Code, opt => opt.MapFrom(src => (Byte)src))
                     .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.ToString()));
                 cfg.CreateMap<AutoPilotDto, AutoPilot>()
                     .ConstructUsing(src => (AutoPilot)src.Code);
                 cfg.CreateMap<SensorAccuracy, SensorAccuracyDto>()
-                    .ForMember(dest => dest.Code, opt => opt.MapFrom(src => src))
+                    .ForMember(dest => dest.Code, opt => opt.MapFrom(src => (Byte)src))
                     .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.ToString()));
                 cfg.CreateMap<SensorAccuracyDto, SensorAccuracy>()
                     .ConstructUsing(src => (SensorAccuracy)src.Code);

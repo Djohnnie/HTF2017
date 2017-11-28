@@ -2,10 +2,10 @@
 {
     public enum AutoPilot
     {
-        Level1,
+        Level1 = 1,
 
-        Level2,
+        Level2 = 2,
 
-        Level3
+        Level3 = 3
     }
 }

@@ -42,7 +42,7 @@ namespace HTF2017.WebApi.Controllers
         /// <returns>The deployed android.</returns>
         /// <remarks>Deploys a new android in the field using the specified deployment settings.</remarks>
         [HttpPost, Route("teams/{teamId}/androids")]
-        public async Task<IActionResult> DeployAndroid(Guid teamId, DeployAndroidDto android)
+        public async Task<IActionResult> DeployAndroid(Guid teamId, [FromBody]DeployAndroidDto android)
         {
             AndroidDto deployedAndroid = await _androidLogic.DeployAndroid(teamId, android);
             return Ok(deployedAndroid);
@@ -57,7 +57,7 @@ namespace HTF2017.WebApi.Controllers
         /// <returns>The android the request is for.</returns>
         /// <remarks>Deploys a new android in the field using the specified deployment settings.</remarks>
         [HttpPost, Route("teams/{teamId}/androids/{androidId}/requests")]
-        public async Task<IActionResult> SendRequest(Guid teamId, Guid androidId, AndroidRequestDto request)
+        public async Task<IActionResult> SendRequest(Guid teamId, Guid androidId, [FromBody]AndroidRequestDto request)
         {
             AndroidDto android = await _androidLogic.SendRequest(teamId, androidId, request);
             return Ok(android);

@@ -2,12 +2,12 @@
 {
     public enum SensorAccuracy
     {
-        SensorOff,
+        SensorOff = 0,
 
-        LowAccuracySensor,
+        LowAccuracySensor = 1,
 
-        MediumAccuracySensor,
+        MediumAccuracySensor = 2,
 
-        HighAccuracySensor
+        HighAccuracySensor = 3
     }
 }

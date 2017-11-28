@@ -15,7 +15,7 @@ namespace HTF2017.Mappers
             MapperConfiguration config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<SensoryDataRequest, AndroidRequestDto>();
-                cfg.CreateMap<DeployAndroidDto, SensoryDataRequest>();
+                cfg.CreateMap<AndroidRequestDto, SensoryDataRequest>();
             });
             _mapper = config.CreateMapper();
         }

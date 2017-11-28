@@ -97,6 +97,7 @@ namespace HTF2017.Business
             if (androidToRequest == null) { throw new HtfValidationException("The specified android is unknown!"); }
 
             SensoryDataRequest requestToCreate = _requestMapper.Map(request);
+            requestToCreate.AndroidId = androidId;
             requestToCreate.TimeStamp = DateTime.UtcNow;
             await _dbContext.SensoryDataRequests.AddAsync(requestToCreate);
             await _dbContext.SaveChangesAsync();

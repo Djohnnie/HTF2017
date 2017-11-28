@@ -105,7 +105,8 @@ namespace HTF2017.Business
                 return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "There is no feedback URL configured for the specified team!" };
             }
             if (teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("htf2017.djohnnie.be") ||
-                teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("htf2017.azurewebsites.net"))
+                teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("htf2017.azurewebsites.net") ||
+                teamToCheck.FeedbackEndpoint.ToLowerInvariant().Contains("seppevanwinkel.be"))
             {
                 return new TeamFeedbackUrlStatusDto { Id = teamId, Status = "Don't try that!!!" };
             }

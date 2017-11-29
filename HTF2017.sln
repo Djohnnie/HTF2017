@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.DataTransferObjects
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.Mappers", "HTF2017.Mappers\HTF2017.Mappers.csproj", "{BB639605-8062-4BD5-BC9A-3386D5677BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.WebJob", "HTF2017.WebJob\HTF2017.WebJob.csproj", "{74A1521B-19EA-4726-A4FD-03C5AE3043B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.WebJob", "HTF2017.WebJob\HTF2017.WebJob.csproj", "{74A1521B-19EA-4726-A4FD-03C5AE3043B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.WebJob.Feedback", "HTF2017.WebJob.Feedback\HTF2017.WebJob.Feedback.csproj", "{D7F70AE5-E62B-48A7-9094-AE213925CE23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74A1521B-19EA-4726-A4FD-03C5AE3043B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

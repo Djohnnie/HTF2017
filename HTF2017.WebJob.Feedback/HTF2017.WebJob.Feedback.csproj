@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HTF2017.DataAccess\HTF2017.DataAccess.csproj" />
+    <ProjectReference Include="..\HTF2017.DataTransferObjects\HTF2017.DataTransferObjects.csproj" />
   </ItemGroup>
 
   <ItemGroup>

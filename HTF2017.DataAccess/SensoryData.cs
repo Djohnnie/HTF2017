@@ -20,6 +20,8 @@ namespace HTF2017.DataAccess
 
         public DateTime TimeStamp { get; set; }
 
+        public Boolean Sent { get; set; }
+
         public Guid AndroidId { get; set; }
 
         public virtual Android Android { get; set; }

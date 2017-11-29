@@ -55,6 +55,28 @@ namespace HTF2017.Business
             if (!Crypt.EnhancedVerify(android.Password, teamToCheck.Password)) { throw new HtfValidationException("The specified password is not correct!"); }
 
             Android androidToDeploy = _deploymentMapper.Map(android);
+
+            if (!Enum.IsDefined(typeof(AutoPilot), androidToDeploy.AutoPilot))
+            {
+                throw new HtfValidationException("The specified value for 'AutoPilot' is not within the expected range!");
+            }
+            if (!Enum.IsDefined(typeof(SensorAccuracy), androidToDeploy.LocationSensorAccuracy))
+            {
+                throw new HtfValidationException("The specified value for 'CrowdSensorAccuracy' is not within the expected range!");
+            }
+            if (!Enum.IsDefined(typeof(SensorAccuracy), androidToDeploy.CrowdSensorAccuracy))
+            {
+                throw new HtfValidationException("The specified value for 'LocationSensorAccuracy' is not within the expected range!");
+            }
+            if (!Enum.IsDefined(typeof(SensorAccuracy), androidToDeploy.MoodSensorAccuracy))
+            {
+                throw new HtfValidationException("The specified value for 'MoodSensorAccuracy' is not within the expected range!");
+            }
+            if (!Enum.IsDefined(typeof(SensorAccuracy), androidToDeploy.RelationshipSensorAccuracy))
+            {
+                throw new HtfValidationException("The specified value for 'RelationshipSensorAccuracy' is not within the expected range!");
+            }
+
             androidToDeploy.TeamId = teamId;
             if (androidToDeploy.AutoPilot == AutoPilot.Level1)
             {
@@ -95,7 +117,7 @@ namespace HTF2017.Business
             if (!Crypt.EnhancedVerify(request.Password, teamToCheck.Password)) { throw new HtfValidationException("The specified password is not correct!"); }
             Android androidToRequest = await _dbContext.Androids.SingleOrDefaultAsync(x => x.Id == androidId);
             if (androidToRequest == null) { throw new HtfValidationException("The specified android is unknown!"); }
-            if(androidToRequest.AutoPilot == AutoPilot.Level1) { throw new HtfValidationException("The specified level-1 android does not support manual requests!"); }
+            if (androidToRequest.AutoPilot == AutoPilot.Level1) { throw new HtfValidationException("The specified level-1 android does not support manual requests!"); }
 
             SensoryDataRequest requestToCreate = _requestMapper.Map(request);
             requestToCreate.AndroidId = androidId;

@@ -21,12 +21,12 @@ namespace HTF2017.Mappers
                     .ForMember(dest => dest.Code, opt => opt.MapFrom(src => (Byte)src))
                     .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.ToString()));
                 cfg.CreateMap<AutoPilotDto, AutoPilot>()
-                    .ConstructUsing(src => (AutoPilot)src.Code);
+                    .ConvertUsing(src => (AutoPilot)src.Code);
                 cfg.CreateMap<SensorAccuracy, SensorAccuracyDto>()
                     .ForMember(dest => dest.Code, opt => opt.MapFrom(src => (Byte)src))
                     .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.ToString()));
                 cfg.CreateMap<SensorAccuracyDto, SensorAccuracy>()
-                    .ConstructUsing(src => (SensorAccuracy)src.Code);
+                    .ConvertUsing(src => (SensorAccuracy)src.Code);
             });
             _mapper = config.CreateMapper();
         }

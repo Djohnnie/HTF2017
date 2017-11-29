@@ -49,17 +49,31 @@ namespace HTF2017.WebJob
                     Android android = await dbContext.Androids.Include(x => x.Team).SingleOrDefaultAsync(x => x.Id == dataRequest.AndroidId);
                     if (android != null)
                     {
+                        Location location = await dbContext.Locations.SingleOrDefaultAsync(x => x.Id == android.Team.LocationId);
+
                         Console.WriteLine($"[ HTF2017 - Processing datarequest for '{android.Team.Name}'. ]");
+
+                        SensoryData previousCrowdSensoryData = await dbContext.SensoryData
+                            .Where(x => x.AndroidId == dataRequest.AndroidId && x.Crowd.HasValue)
+                            .OrderByDescending(o => o.TimeStamp).FirstOrDefaultAsync();
+                        SensoryData previousMoodSensoryData = await dbContext.SensoryData
+                            .Where(x => x.AndroidId == dataRequest.AndroidId && x.Mood.HasValue)
+                            .OrderByDescending(o => o.TimeStamp).FirstOrDefaultAsync();
+                        SensoryData previousRelationshipSensoryData = await dbContext.SensoryData
+                            .Where(x => x.AndroidId == dataRequest.AndroidId && x.Relationship.HasValue)
+                            .OrderByDescending(o => o.TimeStamp).FirstOrDefaultAsync();
 
                         SensoryData data = new SensoryData
                         {
                             AndroidId = dataRequest.AndroidId,
-                            Longitude = dataRequest.Location ? 9 : (Double?)null,
-                            Lattitude = dataRequest.Location ? 9 : (Double?)null,
-                            Crowd = dataRequest.Crowd ? 100 : (Int32?)null,
-                            Mood = dataRequest.Mood ? 100 : (Byte?)null,
-                            Relationship = dataRequest.Relationship ? 100 : (Byte?)null,
-                            TimeStamp = DateTime.UtcNow
+                            // https://www.movable-type.co.uk/scripts/latlong.html
+                            Longitude = dataRequest.Location ? location.Longitude : (Double?)null,
+                            Lattitude = dataRequest.Location ? location.Lattitude : (Double?)null,
+                            Crowd = dataRequest.Crowd ? GetCrowd(android, previousCrowdSensoryData) : null,
+                            Mood = dataRequest.Mood ? GetMood(android, previousMoodSensoryData) : null,
+                            Relationship = dataRequest.Relationship ? GetRelationship(android, previousRelationshipSensoryData) : null,
+                            TimeStamp = DateTime.UtcNow,
+                            AutonomousRequested = dataRequest.AutonomousRequest
                         };
 
                         await dbContext.SensoryData.AddAsync(data);
@@ -71,7 +85,18 @@ namespace HTF2017.WebJob
                         if (isCompromised)
                         {
                             android.Compromised = true;
-                            android.Team.Score -= 1000;
+                            switch (android.AutoPilot)
+                            {
+                                case AutoPilot.Level1:
+                                    android.Team.Score -= 10;
+                                    break;
+                                case AutoPilot.Level2:
+                                    android.Team.Score -= 100;
+                                    break;
+                                case AutoPilot.Level3:
+                                    android.Team.Score -= 1000;
+                                    break;
+                            }
                         }
 
                         await dbContext.SaveChangesAsync();
@@ -87,7 +112,116 @@ namespace HTF2017.WebJob
 
         private static async Task HandleAutoFeedback()
         {
-            await Task.Delay(1000);
+            using (HtfDbContext dbContext = new HtfDbContext())
+            {
+                List<Android> androidsToAutonomouslySendData = await dbContext.Androids
+                    .Where(x => !x.Compromised && x.AutoPilot != AutoPilot.Level3).ToListAsync();
+                foreach (Android android in androidsToAutonomouslySendData)
+                {
+                    SensoryDataRequest lastAutonomousDataRequest = await dbContext.SensoryDataRequests
+                        .Where(x => x.AndroidId == android.Id && x.AutonomousRequest)
+                        .OrderByDescending(o => o.TimeStamp).FirstOrDefaultAsync();
+                    TimeSpan timeSinceLastAutonomousUpdate =
+                        DateTime.UtcNow - (lastAutonomousDataRequest?.TimeStamp ?? DateTime.MinValue);
+                    TimeSpan updateThreshold = TimeSpan.MaxValue;
+                    switch (android.AutoPilot)
+                    {
+                        case AutoPilot.Level1:
+                            updateThreshold = TimeSpan.FromMinutes(15);
+                            break;
+                        case AutoPilot.Level2:
+                            updateThreshold = TimeSpan.FromMinutes(5);
+                            break;
+                    }
+                    if (timeSinceLastAutonomousUpdate > updateThreshold)
+                    {
+                        SensoryDataRequest request = new SensoryDataRequest
+                        {
+                            AndroidId = android.Id,
+                            AutonomousRequest = true,
+                            Location = true,
+                            Crowd = true,
+                            Mood = true,
+                            Relationship = true,
+                            TimeStamp = DateTime.UtcNow
+                        };
+                        await dbContext.SensoryDataRequests.AddAsync(request);
+                        await dbContext.SaveChangesAsync();
+                    }
+                }
+            }
+        }
+
+        private static Int32? GetCrowd(Android android, SensoryData previousSensoryData)
+        {
+            TimeSpan sinceLastUpdate = DateTime.UtcNow - (previousSensoryData?.TimeStamp ?? DateTime.UtcNow);
+            Int32 maximumDeviation = (Int32)(sinceLastUpdate.TotalMinutes * 1);
+
+            switch (android.CrowdSensorAccuracy)
+            {
+                case SensorAccuracy.SensorOff:
+                    return null;
+                case SensorAccuracy.HighAccuracySensor:
+                    maximumDeviation += 100;
+                    break;
+                case SensorAccuracy.MediumAccuracySensor:
+                    maximumDeviation += 1000;
+                    break;
+                case SensorAccuracy.LowAccuracySensor:
+                    maximumDeviation += 1000;
+                    break;
+            }
+
+            Int32 result = (previousSensoryData?.Crowd ?? _randomGenerator.Next(0, 1000000)) + _randomGenerator.Next(-maximumDeviation, maximumDeviation);
+            return result < 0 ? 0 : result > 1000000 ? 1000000 : result;
+        }
+
+        private static Byte? GetMood(Android android, SensoryData previousSensoryData)
+        {
+            TimeSpan sinceLastUpdate = DateTime.UtcNow - (previousSensoryData?.TimeStamp ?? DateTime.UtcNow);
+            Int32 maximumDeviation = (Int32)(sinceLastUpdate.TotalMinutes * 0.1);
+
+            switch (android.MoodSensorAccuracy)
+            {
+                case SensorAccuracy.SensorOff:
+                    return null;
+                case SensorAccuracy.HighAccuracySensor:
+                    maximumDeviation += 16;
+                    break;
+                case SensorAccuracy.MediumAccuracySensor:
+                    maximumDeviation += 64;
+                    break;
+                case SensorAccuracy.LowAccuracySensor:
+                    maximumDeviation += 128;
+                    break;
+            }
+
+            Int32 result = (previousSensoryData?.Mood ?? _randomGenerator.Next(0, 256)) + _randomGenerator.Next(-maximumDeviation, maximumDeviation);
+            return result < 0 ? (Byte)0 : result > 255 ? (Byte)255 : (Byte)result;
+        }
+
+        private static Byte? GetRelationship(Android android, SensoryData previousSensoryData)
+        {
+            TimeSpan sinceLastUpdate = DateTime.UtcNow - (previousSensoryData?.TimeStamp ?? DateTime.UtcNow);
+            Int32 maximumDeviation = (Int32)(sinceLastUpdate.TotalMinutes * 0.1);
+
+            switch (android.RelationshipSensorAccuracy)
+            {
+                case SensorAccuracy.SensorOff:
+                    return null;
+                case SensorAccuracy.HighAccuracySensor:
+                    maximumDeviation += 16;
+                    break;
+                case SensorAccuracy.MediumAccuracySensor:
+                    maximumDeviation += 64;
+                    break;
+                case SensorAccuracy.LowAccuracySensor:
+                    maximumDeviation += 128;
+                    break;
+            }
+
+            Int32 result = (previousSensoryData?.Relationship ?? _randomGenerator.Next(0, 256)) + _randomGenerator.Next(-maximumDeviation, maximumDeviation);
+            return result < 0 ? (Byte)0 : result > 255 ? (Byte)255 : (Byte)result;
         }
 
         private static Boolean IsAndroidCompromised(AutoPilot autoPilot,
@@ -95,13 +229,13 @@ namespace HTF2017.WebJob
             SensorAccuracy mood, SensorAccuracy relationship)
         {
             // 0% - 100% chance of compromised!
-            // AutoPilot Level-1: 0% + sensors = 15%
-            // AutoPilot Level-2: 10% + sensors = [0% - 70%]
-            // AutoPilot Level-3: 20% + sensors = [0% - 80%]
+            // AutoPilot Level-1: 0% + sensors = 8%
+            // AutoPilot Level-2: 5% + sensors = 25%
+            // AutoPilot Level-3: 10% + sensors = [10% - 50%]
             // Sensor Off: 0%
-            // Sensor Low: 5%
-            // Sensor Medium: 10%
-            // Sensor High: 15%
+            // Sensor Low: 2%
+            // Sensor Medium: 5%
+            // Sensor High: 10%
             Int32 random = _randomGenerator.Next(0, 101);
             Int32 chance = GetAutoPilotChance(autoPilot)
                 + GetSensorAccuracyChance(location)
@@ -118,9 +252,9 @@ namespace HTF2017.WebJob
                 case AutoPilot.Level1:
                     return 0;
                 case AutoPilot.Level2:
-                    return 10;
+                    return 5;
                 case AutoPilot.Level3:
-                    return 20;
+                    return 10;
             }
             return 100;
         }
@@ -132,11 +266,11 @@ namespace HTF2017.WebJob
                 case SensorAccuracy.SensorOff:
                     return 0;
                 case SensorAccuracy.LowAccuracySensor:
-                    return 5;
+                    return 2;
                 case SensorAccuracy.MediumAccuracySensor:
-                    return 10;
+                    return 5;
                 case SensorAccuracy.HighAccuracySensor:
-                    return 15;
+                    return 10;
             }
             return 100;
         }

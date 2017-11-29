@@ -17,5 +17,7 @@ namespace HTF2017.DataTransferObjects
         public Byte? Relationship { get; set; }
 
         public DateTime TimeStamp { get; set; }
+
+        public Boolean AutonomousRequest { get; set; }
     }
 }

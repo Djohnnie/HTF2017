@@ -85,6 +85,13 @@ namespace HTF2017.Business
                 androidToDeploy.MoodSensorAccuracy = SensorAccuracy.LowAccuracySensor;
                 androidToDeploy.RelationshipSensorAccuracy = SensorAccuracy.LowAccuracySensor;
             }
+            if (androidToDeploy.AutoPilot == AutoPilot.Level2)
+            {
+                androidToDeploy.LocationSensorAccuracy = SensorAccuracy.MediumAccuracySensor;
+                androidToDeploy.CrowdSensorAccuracy = SensorAccuracy.MediumAccuracySensor;
+                androidToDeploy.MoodSensorAccuracy = SensorAccuracy.MediumAccuracySensor;
+                androidToDeploy.RelationshipSensorAccuracy = SensorAccuracy.MediumAccuracySensor;
+            }
             switch (androidToDeploy.AutoPilot)
             {
                 case AutoPilot.Level1:

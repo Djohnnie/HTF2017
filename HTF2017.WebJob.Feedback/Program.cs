@@ -49,7 +49,7 @@ namespace HTF2017.WebJob.Feedback
                     if (team != null)
                     {
                         Console.WriteLine($"[ HTF2017 - Processing data for '{team.Name}'. ]");
-                        Boolean sent = false;
+                        Boolean received = false;
 
                         try
                         {
@@ -63,14 +63,22 @@ namespace HTF2017.WebJob.Feedback
                                 Crowd = d.Crowd,
                                 Mood = d.Mood,
                                 Relationship = d.Relationship,
-                                TimeStamp = d.TimeStamp
+                                TimeStamp = d.TimeStamp,
+                                AutonomousRequest = d.AutonomousRequested
                             };
                             request.AddJsonBody(feedback);
                             FeedbackResponseDto response = await client.PostTaskAsync<FeedbackResponseDto>(request);
                             if (response != null && response.TeamId == team.Id)
                             {
-                                team.Score += 10;
-                                sent = true;
+                                if (d.AutonomousRequested)
+                                {
+                                    team.Score += 10;
+                                }
+                                else
+                                {
+                                    team.Score += 20;
+                                }
+                                received = true;
                             }
                             else
                             {
@@ -83,8 +91,9 @@ namespace HTF2017.WebJob.Feedback
                         }
 
                         d.Sent = true;
+                        d.Received = received;
                         await dbContext.SaveChangesAsync();
-                        Console.WriteLine($"[ HTF2017 - data for '{team.Name}' {(sent ? "successfully sent" : "failed to send")}. ]");
+                        Console.WriteLine($"[ HTF2017 - data for '{team.Name}' {(received ? "successfully sent" : "failed to send")}. ]");
                     }
                     else
                     {

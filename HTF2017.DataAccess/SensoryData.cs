@@ -22,6 +22,10 @@ namespace HTF2017.DataAccess
 
         public Boolean Sent { get; set; }
 
+        public Boolean? Received { get; set; }
+
+        public Boolean AutonomousRequested { get; set; }
+
         public Guid AndroidId { get; set; }
 
         public virtual Android Android { get; set; }

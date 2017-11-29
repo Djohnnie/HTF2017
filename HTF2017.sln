@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTF2017.WebJob", "HTF2017.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.WebJob.Feedback", "HTF2017.WebJob.Feedback\HTF2017.WebJob.Feedback.csproj", "{D7F70AE5-E62B-48A7-9094-AE213925CE23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTF2017.WebApi.Feedback", "HTF2017.WebApi.Feedback\HTF2017.WebApi.Feedback.csproj", "{6165A033-4CC7-4463-AA97-7DCC595A18B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7F70AE5-E62B-48A7-9094-AE213925CE23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6165A033-4CC7-4463-AA97-7DCC595A18B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6165A033-4CC7-4463-AA97-7DCC595A18B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6165A033-4CC7-4463-AA97-7DCC595A18B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6165A033-4CC7-4463-AA97-7DCC595A18B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

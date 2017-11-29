@@ -10,7 +10,7 @@ namespace HTF2017.DataTransferObjects
 
         public Double? Longitude { get; set; }
 
-        public Byte? Crowd { get; set; }
+        public Int32? Crowd { get; set; }
 
         public Byte? Mood { get; set; }
 

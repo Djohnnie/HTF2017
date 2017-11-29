@@ -34,6 +34,8 @@
         <br />
         <a href="#ngrok">ngrok</a>
         <br />
+        <a href="#attack">Your plan of attack!</a>
+        <br />
 
         <h2 id="start">Get started</h2>
         <p>
@@ -158,6 +160,23 @@
             to edit the configuration in the bottom area of the window. In the configuration file you search
             for the &lt;bindings&gt; element and add the ngrok hostname to the bindings list to make ngrok work.
         </p>
+        
+        <h2 id="attack">Your plan of attack!</h2>
+        <p>Our suggested plan of attack is:</p>
+        <ol>
+            <li>Register a team using the dashboard website.</li>
+            <li>Create an ASP.NET WebAPI project that is able to process GET requests without arguments and return a HTTP OK.</li>
+            <li>Deploy, or locally run your ASP.NET WebAPI</li>
+            <li>Setup ngrok to make your locally deployed webservice available from the internet.</li>
+            <li>Update your team feedback URL with the public ngrok URL using the dashboard website.</li>
+            <li>Test the feedback URL using the dashboard website.</li>
+            <li>Extend your ASP.NET WebAPI project to also have a POST ability on the same URL and make it process the SensoryData feedback data and return your team identifier to acknowledge you have received it successfully.</li>
+            <li>Deploy your first level-2 or level-3 bot and request a Sensory Data update.</li>
+            <li>Watch your ASP.NET WebAPI and team score to identify if the Sensory Data is received.</li>
+            <li>do-while until you are satisfied with your server code.</li>
+            <li>Create a dashboard to show the data that has been received by your bots. The prettier the better!</li>
+            <li>Create a control center UI to help you deploy androids and request updates. The more user friendly, the better!</li>
+        </ol>
 
 
     </div>

@@ -19,7 +19,7 @@ namespace HTF2017.DataAccess
 
         public SensorAccuracy RelationshipSensorAccuracy { get; set; }
 
-        public Boolean Compomised { get; set; }
+        public Boolean Compromised { get; set; }
 
         public Guid TeamId { get; set; }
 

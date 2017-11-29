@@ -38,8 +38,8 @@ namespace HTF2017.Business
                 LocationName = x.Location.Name,
                 TotalNumberOfAndroids = x.TotalNumberOfAndroids,
                 NumberOfAndroidsAvailable = x.TotalNumberOfAndroids - x.Androids.Count,
-                NumberOfAndroidsActive = x.Androids.Count(a => !a.Compomised),
-                NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compomised),
+                NumberOfAndroidsActive = x.Androids.Count(a => !a.Compromised),
+                NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compromised),
             }).ToListAsync();
         }
 
@@ -83,8 +83,8 @@ namespace HTF2017.Business
                 LocationName = x.Location.Name,
                 TotalNumberOfAndroids = x.TotalNumberOfAndroids,
                 NumberOfAndroidsAvailable = x.TotalNumberOfAndroids - x.Androids.Count,
-                NumberOfAndroidsActive = x.Androids.Count(a => !a.Compomised),
-                NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compomised),
+                NumberOfAndroidsActive = x.Androids.Count(a => !a.Compromised),
+                NumberOfAndroidsCompromised = x.Androids.Count(a => a.Compromised),
             }).SingleOrDefaultAsync(e => e.Id == teamId);
         }
 

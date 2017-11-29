@@ -16,6 +16,6 @@ namespace HTF2017.DataTransferObjects
 
         public SensorAccuracyDto RelationshipSensorAccuracy { get; set; }
 
-        public Boolean Compomised { get; set; }
+        public Boolean Compromised { get; set; }
     }
 }

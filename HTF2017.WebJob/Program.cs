@@ -230,12 +230,12 @@ namespace HTF2017.WebJob
         {
             // 0% - 100% chance of compromised!
             // AutoPilot Level-1: 0% + sensors = 8%
-            // AutoPilot Level-2: 5% + sensors = 25%
-            // AutoPilot Level-3: 10% + sensors = [10% - 50%]
+            // AutoPilot Level-2: 3% + sensors = 15%
+            // AutoPilot Level-3: 5% + sensors = [5% - 25%]
             // Sensor Off: 0%
             // Sensor Low: 2%
-            // Sensor Medium: 5%
-            // Sensor High: 10%
+            // Sensor Medium: 3%
+            // Sensor High: 5%
             Int32 random = _randomGenerator.Next(0, 101);
             Int32 chance = GetAutoPilotChance(autoPilot)
                 + GetSensorAccuracyChance(location)
@@ -252,9 +252,9 @@ namespace HTF2017.WebJob
                 case AutoPilot.Level1:
                     return 0;
                 case AutoPilot.Level2:
-                    return 5;
+                    return 3;
                 case AutoPilot.Level3:
-                    return 10;
+                    return 5;
             }
             return 100;
         }
@@ -268,9 +268,9 @@ namespace HTF2017.WebJob
                 case SensorAccuracy.LowAccuracySensor:
                     return 2;
                 case SensorAccuracy.MediumAccuracySensor:
-                    return 5;
+                    return 3;
                 case SensorAccuracy.HighAccuracySensor:
-                    return 10;
+                    return 5;
             }
             return 100;
         }

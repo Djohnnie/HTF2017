@@ -77,6 +77,22 @@ namespace HTF2017.Business
                 throw new HtfValidationException("The specified value for 'RelationshipSensorAccuracy' is not within the expected range!");
             }
 
+            Int32 existingAndroids = await _dbContext.Androids.CountAsync(
+                 x => x.TeamId == teamId && !x.Compromised && x.AutoPilot == androidToDeploy.AutoPilot);
+
+            switch (androidToDeploy.AutoPilot)
+            {
+                case AutoPilot.Level1:
+                    if (existingAndroids >= 500) { throw new HtfValidationException("This many level-1 androids in the field is getting suspicious!"); }
+                    break;
+                case AutoPilot.Level2:
+                    if (existingAndroids >= 50) { throw new HtfValidationException("This many level-2 androids in the field is getting suspicious!"); }
+                    break;
+                case AutoPilot.Level3:
+                    if (existingAndroids >= 5) { throw new HtfValidationException("This many level-3 androids in the field is getting suspicious!"); }
+                    break;
+            }
+
             androidToDeploy.TeamId = teamId;
             if (androidToDeploy.AutoPilot == AutoPilot.Level1)
             {
